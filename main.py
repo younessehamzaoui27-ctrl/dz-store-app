@@ -130,7 +130,12 @@ def init_db():
         "countdown_text": "سارع قبل انتهاء المخزون، العرض الترويجي ينتهي خلال:",
         "countdown_hours": "4",
         "telegram_bot_token": "",
-        "telegram_chat_id": ""
+        "telegram_chat_id": "",
+        "is_locked": "0",
+        "master_pin": "9988",
+        "lock_title": "⚠️ تنبيه: تم تعليق خدمات هذا المتجر مؤقتاً",
+        "lock_message": "تم تعليق خدمات هذا المتجر ولوحة التحكم مؤقتاً لعدم استكمال إجراءات تسوية الفاتورة والتسليم النهائي. يرجى الاتصال بالإدارة أو المطور المسؤول لتسوية الوضعية واستئناف العمل فوراً.",
+        "lock_phone": ""
     }
     
     for k, v in default_settings.items():
@@ -188,6 +193,28 @@ def get_db():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
+
+def get_lock_status():
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT key, value FROM settings WHERE key IN ('is_locked', 'lock_title', 'lock_message', 'lock_phone')")
+    data = {row["key"]: row["value"] for row in cursor.fetchall()}
+    conn.close()
+    return {
+        "is_locked": data.get("is_locked", "0") == "1",
+        "lock_title": data.get("lock_title", "⚠️ تنبيه: تم تعليق خدمات هذا المتجر مؤقتاً"),
+        "lock_message": data.get("lock_message", "تم تعليق خدمات هذا المتجر ولوحة التحكم مؤقتاً لعدم استكمال إجراءات تسوية الفاتورة والتسليم النهائي."),
+        "lock_phone": data.get("lock_phone", "")
+    }
+
+def get_master_pin():
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT value FROM settings WHERE key = 'master_pin'")
+    row = cursor.fetchone()
+    conn.close()
+    return row["value"] if row else "9988"
+
 
 # ==================== PYDANTIC MODELS ====================
 class OrderCreate(BaseModel):
@@ -249,6 +276,21 @@ class SettingsUpdate(BaseModel):
     store_name: Optional[str] = None
     telegram_bot_token: Optional[str] = None
     telegram_chat_id: Optional[str] = None
+
+class MasterVerifyRequest(BaseModel):
+    pin: str
+
+class MasterToggleRequest(BaseModel):
+    pin: str
+    is_locked: bool
+    lock_title: Optional[str] = None
+    lock_message: Optional[str] = None
+    lock_phone: Optional[str] = None
+
+class MasterChangePinRequest(BaseModel):
+    old_pin: str
+    new_pin: str
+
 
 # Telegram Notification Sender
 async def send_telegram_alert(order_data: dict, bot_token: str, chat_id: str):
@@ -482,6 +524,10 @@ def reset_wilayas():
 
 @app.post("/api/orders")
 async def create_order(order: OrderCreate):
+    lock_info = get_lock_status()
+    if lock_info["is_locked"]:
+        raise HTTPException(status_code=403, detail="المتجر معلق ومجمد مؤقتاً لعدم استكمال تسوية الفاتورة")
+        
     conn = get_db()
     cursor = conn.cursor()
     
@@ -704,11 +750,66 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 @app.get("/")
 def serve_landing():
+    lock_info = get_lock_status()
+    if lock_info["is_locked"]:
+        return FileResponse(os.path.join(STATIC_DIR, "locked.html"))
     return FileResponse(os.path.join(STATIC_DIR, "index.html"))
 
 @app.get("/admin")
 def serve_admin():
+    lock_info = get_lock_status()
+    if lock_info["is_locked"]:
+        return FileResponse(os.path.join(STATIC_DIR, "locked.html"))
     return FileResponse(os.path.join(STATIC_DIR, "admin.html"))
+
+@app.get("/master")
+def serve_master():
+    return FileResponse(os.path.join(STATIC_DIR, "master.html"))
+
+@app.get("/api/public/lock-info")
+def get_public_lock_info():
+    return get_lock_status()
+
+@app.post("/api/master/verify")
+def master_verify(req: MasterVerifyRequest):
+    stored_pin = get_master_pin()
+    if req.pin != stored_pin:
+        raise HTTPException(status_code=401, detail="الرمز السري Master PIN غير صحيح!")
+    status = get_lock_status()
+    return {"status": "ok", **status}
+
+@app.post("/api/master/toggle")
+def master_toggle(req: MasterToggleRequest):
+    stored_pin = get_master_pin()
+    if req.pin != stored_pin:
+        raise HTTPException(status_code=401, detail="الرمز السري Master PIN غير صحيح!")
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('is_locked', ?)", ("1" if req.is_locked else "0",))
+    if req.lock_title is not None:
+        cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('lock_title', ?)", (req.lock_title,))
+    if req.lock_message is not None:
+        cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('lock_message', ?)", (req.lock_message,))
+    if req.lock_phone is not None:
+        cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('lock_phone', ?)", (req.lock_phone,))
+    conn.commit()
+    conn.close()
+    return {"status": "ok", "is_locked": req.is_locked, "message": "تم تحديث حالة المتجر بنجاح!"}
+
+@app.post("/api/master/change-pin")
+def master_change_pin(req: MasterChangePinRequest):
+    stored_pin = get_master_pin()
+    if req.old_pin != stored_pin:
+        raise HTTPException(status_code=401, detail="الرمز السري الحالي غير صحيح!")
+    if not req.new_pin or len(req.new_pin.strip()) < 4:
+        raise HTTPException(status_code=400, detail="الرمز الجديد يجب أن يكون 4 أرقام أو حروف على الأقل")
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('master_pin', ?)", (req.new_pin.strip(),))
+    conn.commit()
+    conn.close()
+    return {"status": "ok", "message": "تم تغيير الرمز السري بنجاح!"}
+
 
 if __name__ == "__main__":
     import threading

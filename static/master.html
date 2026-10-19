@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة المطور السرية — Master Remote Control</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background: #0b0f19;
+            color: #f1f5f9;
+            min-height: 100vh;
+            padding: 30px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .container {
+            max-width: 720px;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .header .badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+        .header p {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+        .card {
+            background: #151c2c;
+            border: 1px solid #1e293b;
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+        }
+        .input-wrapper {
+            position: relative;
+        }
+        .input-wrapper input, .form-group textarea {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-wrapper input:focus, .form-group textarea:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        .btn-toggle-eye {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+        }
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+        .btn-lock {
+            background: #dc2626;
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.35);
+        }
+        .btn-lock:hover {
+            background: #b91c1c;
+        }
+        .btn-unlock {
+            background: #16a34a;
+            color: white;
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.35);
+        }
+        .btn-unlock:hover {
+            background: #15803d;
+        }
+        .status-box {
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .status-box.active {
+            background: rgba(22, 163, 74, 0.12);
+            border: 1px solid rgba(22, 163, 74, 0.3);
+        }
+        .status-box.locked {
+            background: rgba(220, 38, 38, 0.12);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pulse-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .pulse-dot.green {
+            background: #22c55e;
+            box-shadow: 0 0 12px #22c55e;
+        }
+        .pulse-dot.red {
+            background: #ef4444;
+            box-shadow: 0 0 12px #ef4444;
+            animation: pulseRed 1.8s infinite;
+        }
+        @keyframes pulseRed {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        .status-text h2 {
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .status-text p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 3px;
+        }
+        .tips-box {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px dashed #334155;
+            border-radius: 16px;
+            padding: 20px;
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.8;
+        }
+        .tips-box strong {
+            color: #f59e0b;
+        }
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1000;
+            border-right: 4px solid #6366f1;
+            font-size: 14px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <span class="badge">🛡️ بوابة المطور السرية</span>
+            <h1>نظام التحكم عن بُعد في تشغيل وتجميد المتجر</h1>
+            <p>خاص بالمطور فقط — لا تشارك هذا الرابط مع الزبون إطلاقاً</p>
+        </div>
+
+        <!-- Section 1: PIN Login -->
+        <div id="loginCard" class="card">
+            <h2 style="font-size: 18px; margin-bottom: 14px;">🔐 تسجيل الدخول للوحة التحكم</h2>
+            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">
+                أدخل الرمز السري Master PIN لتأكيد هويتك كمطور للمشروع. (الرمز الافتراضي: <code>9988</code>)
+            </p>
+            <div class="form-group">
+                <label>الرمز السري Master PIN</label>
+                <div class="input-wrapper">
+                    <input type="password" id="inputPin" placeholder="أدخل الرمز السري هنا..." autofocus>
+                    <button type="button" class="btn-toggle-eye" onclick="togglePasswordVisibility('inputPin')">👁️</button>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="loginMaster()">
+                <span>🔓</span> دخول لوحة التحكم
+            </button>
+        </div>
+
+        <!-- Section 2: Dashboard (Hidden until login) -->
+        <div id="dashboardArea" style="display: none;">
+            <!-- Status Card -->
+            <div id="statusBox" class="status-box active">
+                <div class="status-indicator">
+                    <span id="statusDot" class="pulse-dot green"></span>
+                    <div class="status-text">
+                        <h2 id="statusTitle">المتجر نشط وشغال عادي 🟢</h2>
+                        <p id="statusDesc">الموقع مفتوح للزبائن وعمليات الشراء ولوحة التاجر تعمل بشكل طبيعي.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Big Action Trigger -->
+            <div class="card">
+                <h2 style="font-size: 18px; margin-bottom: 12px;">⚡ إجراء التجميد أو التفعيل الفوري</h2>
+                <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">
+                    في حال تماطل الزبون في دفع المستحقات، اضغط على زر التجميد لتعطيل المتجر فوراً.
+                </p>
+                <button id="btnActionLock" class="btn btn-lock" onclick="toggleStoreLock(true)">
+                    <span>🔒</span> تجميد المتجر فوراً (إذا لم يسدد المستحقات)
+                </button>
+                <button id="btnActionUnlock" class="btn btn-unlock" style="display: none;" onclick="toggleStoreLock(false)">
+                    <span>🔓</span> إلغاء التجميد فوراً (بعد استلام المستحقات)
+                </button>
+            </div>
+
+            <!-- Customization Settings -->
+            <div class="card">
+                <h2 style="font-size: 18px; margin-bottom: 16px;">✏️ إعدادات شاشة التجميد</h2>
+                <div class="form-group">
+                    <label>عنوان شاشة التجميد</label>
+                    <input type="text" id="cfgTitle" value="⚠️ تنبيه: تم تعليق خدمات هذا المتجر مؤقتاً">
+                </div>
+                <div class="form-group">
+                    <label>نص رسالة التجميد (التي تظهر للزبون)</label>
+                    <textarea id="cfgMessage" rows="3">تم تعليق خدمات هذا المتجر مؤقتاً لعدم استكمال إجراءات تسوية الفاتورة والتسليم النهائي. يرجى الاتصال بالمطور لتسوية الوضعية واستئناف العمل فوراً.</textarea>
+                </div>
+                <div class="form-group">
+                    <label>رقم هاتف المطور (WhatsApp / مكالمات)</label>
+                    <input type="text" id="cfgPhone" placeholder="مثال: 0550123456">
+                </div>
+                <button class="btn btn-primary" onclick="saveLockSettings()">
+                    <span>💾</span> حفظ تعديلات الشاشة
+                </button>
+            </div>
+
+            <!-- Change Master PIN -->
+            <div class="card">
+                <h2 style="font-size: 18px; margin-bottom: 14px;">🔑 تغيير الرمز السري Master PIN</h2>
+                <div class="form-group">
+                    <label>الرمز السري الجديد</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="cfgNewPin" placeholder="4 أرقام أو حروف على الأقل">
+                        <button type="button" class="btn-toggle-eye" onclick="togglePasswordVisibility('cfgNewPin')">👁️</button>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="background: #334155;" onclick="changeMasterPin()">
+                    <span>🔄</span> تحديث الرمز السري
+                </button>
+            </div>
+
+            <!-- Practical Tips -->
+            <div class="tips-box">
+                <p><strong>💡 نصيحة ذهبية لضمان حقك:</strong></p>
+                <p>1. <strong>ما تمدش للزبون كود السورس:</strong> الزبون يحتاج فقط رابط متجره ورابط لوحة التحكم <code>/admin</code> لإدارة سلعه وطلبياته.</p>
+                <p>2. <strong>إذا تأخر في الخلاص:</strong> ادخل من هاتفك لهذا الرابط <code>/master</code> ودير "تجميد المتجر". المتجر يتعطل وتخرجله شاشتك مع رقمك فوراً.</p>
+                <p>3. <strong>كي يخلصك:</strong> ادخل ودير "إلغاء التجميد" في ثانية وحدة يرجع كلش كما كان بدون أي ضياع للبيانات.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        let currentPin = '';
+        let isStoreLocked = false;
+
+        function showToast(msg, isSuccess = true) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.borderColor = isSuccess ? '#16a34a' : '#dc2626';
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3500);
+        }
+
+        function togglePasswordVisibility(inputId) {
+            const el = document.getElementById(inputId);
+            el.type = el.type === 'password' ? 'text' : 'password';
+        }
+
+        async function loginMaster() {
+            const pin = document.getElementById('inputPin').value.trim();
+            if (!pin) {
+                showToast('يرجى إدخال الرمز السري', false);
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/master/verify', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ pin: pin })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    showToast(err.detail || 'الرمز السري غير صحيح', false);
+                    return;
+                }
+
+                const data = await res.json();
+                currentPin = pin;
+                isStoreLocked = data.is_locked;
+
+                document.getElementById('loginCard').style.display = 'none';
+                document.getElementById('dashboardArea').style.display = 'block';
+
+                document.getElementById('cfgTitle').value = data.lock_title || '';
+                document.getElementById('cfgMessage').value = data.lock_message || '';
+                document.getElementById('cfgPhone').value = data.lock_phone || '';
+
+                updateUIStatus(isStoreLocked);
+                showToast('تم تسجيل الدخول بنجاح! مرحباً بك');
+            } catch (e) {
+                showToast('حدث خطأ أثناء الاتصال بالخادم', false);
+            }
+        }
+
+        function updateUIStatus(locked) {
+            isStoreLocked = locked;
+            const statusBox = document.getElementById('statusBox');
+            const statusDot = document.getElementById('statusDot');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusDesc = document.getElementById('statusDesc');
+            const btnLock = document.getElementById('btnActionLock');
+            const btnUnlock = document.getElementById('btnActionUnlock');
+
+            if (locked) {
+                statusBox.className = 'status-box locked';
+                statusDot.className = 'pulse-dot red';
+                statusTitle.innerText = 'المتجر مجمد ومعطل حالياً 🔴';
+                statusDesc.innerText = 'المتجر ولوحة التحكم مغلقان وتظهر شاشة التجميد للجميع.';
+                btnLock.style.display = 'none';
+                btnUnlock.style.display = 'inline-flex';
+            } else {
+                statusBox.className = 'status-box active';
+                statusDot.className = 'pulse-dot green';
+                statusTitle.innerText = 'المتجر نشط وشغال عادي 🟢';
+                statusDesc.innerText = 'الموقع مفتوح للزبائن وعمليات الشراء ولوحة التاجر تعمل بشكل طبيعي.';
+                btnLock.style.display = 'inline-flex';
+                btnUnlock.style.display = 'none';
+            }
+        }
+
+        async function toggleStoreLock(shouldLock) {
+            if (shouldLock) {
+                if (!confirm('⚠️ هل أنت متأكد من تجميد وتعليق هذا المتجر؟ لن يتمكن الزبائن من الشراء ولن يتمكن التاجر من فتح لوحة التحكم!')) {
+                    return;
+                }
+            }
+
+            try {
+                const res = await fetch('/api/master/toggle', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        pin: currentPin,
+                        is_locked: shouldLock,
+                        lock_title: document.getElementById('cfgTitle').value.trim(),
+                        lock_message: document.getElementById('cfgMessage').value.trim(),
+                        lock_phone: document.getElementById('cfgPhone').value.trim()
+                    })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    showToast(err.detail || 'فشلت العملية', false);
+                    return;
+                }
+
+                updateUIStatus(shouldLock);
+                showToast(shouldLock ? '🔒 تم تجميد وتعطيل المتجر بنجاح' : '🔓 تم فك التجميد وتفعيل المتجر بنجاح');
+            } catch (e) {
+                showToast('حدث خطأ في الاتصال', false);
+            }
+        }
+
+        async function saveLockSettings() {
+            try {
+                const res = await fetch('/api/master/toggle', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        pin: currentPin,
+                        is_locked: isStoreLocked,
+                        lock_title: document.getElementById('cfgTitle').value.trim(),
+                        lock_message: document.getElementById('cfgMessage').value.trim(),
+                        lock_phone: document.getElementById('cfgPhone').value.trim()
+                    })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    showToast(err.detail || 'فشل حفظ الإعدادات', false);
+                    return;
+                }
+
+                showToast('✅ تم حفظ إعدادات شاشة التجميد بنجاح');
+            } catch (e) {
+                showToast('حدث خطأ في الاتصال', false);
+            }
+        }
+
+        async function changeMasterPin() {
+            const newPin = document.getElementById('cfgNewPin').value.trim();
+            if (!newPin || newPin.length < 4) {
+                showToast('الرمز الجديد يجب أن يكون 4 أرقام/حروف على الأقل', false);
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/master/change-pin', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        old_pin: currentPin,
+                        new_pin: newPin
+                    })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    showToast(err.detail || 'فشل تغيير الرمز', false);
+                    return;
+                }
+
+                currentPin = newPin;
+                document.getElementById('cfgNewPin').value = '';
+                showToast('🔑 تم تغيير الرمز السري Master PIN بنجاح!');
+            } catch (e) {
+                showToast('حدث خطأ في الاتصال', false);
+            }
+        }
+
+        // Enter key to login
+        document.getElementById('inputPin').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') loginMaster();
+        });
+    </script>
+</body>
+</html>
