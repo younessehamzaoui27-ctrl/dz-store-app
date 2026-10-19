@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">العرض الحصري بالجزائر | الدفع عند الاستلام</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6 Pro / Free -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .shimmer-btn {
+            background-size: 200% auto;
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+        .shimmer-btn:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+        }
+        .pulse-soft {
+            animation: pulse-soft 2s infinite ease-in-out;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(0.98); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-slate-100 via-slate-50 to-slate-100 text-slate-800 antialiased pb-24 md:pb-12 min-h-screen">
+
+    <!-- Top Announcement Bar -->
+    <div id="announcement-wrapper" class="bg-gradient-to-r from-red-600 via-rose-600 to-red-600 text-white text-xs sm:text-sm py-2 px-4 text-center font-bold flex items-center justify-center gap-2 shadow-sm">
+        <i class="fa-solid fa-fire text-amber-300 animate-bounce"></i>
+        <span id="announcement-text">عرض خاص محدود: تخفيض استثنائي 40% + توصيل مجاني عند طلب قطعتين فما فوق!</span>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="backdrop-blur-md bg-white/90 border-b border-slate-200/80 sticky top-0 z-40 shadow-sm transition">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <span class="w-9 h-9 bg-gradient-to-br from-emerald-500 to-teal-700 text-white rounded-xl flex items-center justify-center font-black text-sm shadow-md shadow-emerald-500/20">
+                    DZ
+                </span>
+                <span id="nav-store-name" class="text-xl font-black text-slate-900 tracking-tight">
+                    Smart<span class="text-emerald-600">Store</span>
+                </span>
+            </div>
+            <a href="#order-section" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-cart-shopping"></i> اطلب الآن
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-6 space-y-8">
+
+        <!-- Hero Title Section -->
+        <section class="text-center space-y-3 pt-2">
+            <div class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full shadow-xs">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>⭐ العرض الأكثر طلباً وتوصية في الجزائر 🇩🇿</span>
+            </div>
+
+            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
+                <span id="hero-title">جاري تحميل المنتج...</span>
+                <br>
+                <span id="hero-subtitle" class="text-lg sm:text-2xl font-bold text-slate-600 mt-1 block"></span>
+            </h1>
+
+            <div class="flex items-center justify-center gap-2 text-amber-500 font-bold text-sm">
+                <div class="flex text-amber-400 text-xs sm:text-sm">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <span class="text-slate-600 font-bold text-xs sm:text-sm">(4.9/5 بناءً على 840+ مراجعة مؤكدة)</span>
+            </div>
+        </section>
+
+        <!-- Product Image Showcase -->
+        <section class="bg-white rounded-3xl p-4 sm:p-5 shadow-xl shadow-slate-200/60 border border-slate-200/80 overflow-hidden">
+            <div class="relative rounded-2xl overflow-hidden bg-slate-100 aspect-square sm:aspect-[16/10] flex items-center justify-center">
+                <img id="main-image" src="" alt="Product" class="w-full h-full object-cover">
+                
+                <div class="absolute top-4 right-4 bg-gradient-to-r from-red-600 to-rose-600 text-white font-black text-xs sm:text-sm px-3.5 py-1.5 rounded-xl shadow-lg flex items-center gap-1.5">
+                    <i class="fa-solid fa-tag"></i> 40%- خصم خاص
+                </div>
+
+                <div class="absolute bottom-4 right-4 bg-slate-950/80 backdrop-blur-md text-white text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-2 border border-white/10">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-bold">متوفر للتوصيل السريع لـ 58 ولاية</span>
+                </div>
+            </div>
+
+            <!-- The 4 Trust Badges (المربعات الأربعة القابلة للتخصيص بالكامل) -->
+            <div id="badges-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 text-center">
+                <!-- Dynamically injected from /api/landing-config -->
+            </div>
+        </section>
+
+        <!-- Product Specs & Why Buy ("علاش هذا المنتج...؟") -->
+        <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/60 border border-slate-200/80 space-y-5">
+            <div class="border-r-4 border-emerald-600 pr-3">
+                <h2 id="features-main-heading" class="text-xl sm:text-2xl font-black text-slate-900">
+                    علاش هذا المنتج هو الاختيار الأفضل ليك؟
+                </h2>
+                <p class="text-xs text-slate-500 mt-1">أهم الخصائص والمميزات التي تجعلك تختاره بدون تردد:</p>
+            </div>
+
+            <!-- Features Points List -->
+            <div id="features-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                <!-- Injected dynamically from /api/landing-config -->
+            </div>
+        </section>
+
+        <!-- Luxury Countdown Timer (قابل للتفعيل/التعطيل) -->
+        <section id="countdown-section" class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 rounded-3xl p-6 sm:p-8 text-white text-center shadow-2xl relative overflow-hidden border border-emerald-900/40 space-y-4">
+            <div class="space-y-1">
+                <span class="inline-block bg-red-500/20 text-red-300 border border-red-500/30 text-[11px] font-bold px-3 py-1 rounded-full">
+                    🔥 ينتهي العرض قريباً
+                </span>
+                <p id="countdown-title-text" class="text-sm sm:text-base font-bold text-slate-200">
+                    سارع قبل انتهاء المخزون، العرض الترويجي ينتهي خلال:
+                </p>
+            </div>
+
+            <div class="flex justify-center items-center gap-2 sm:gap-4">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 w-20 sm:w-24 border border-white/10 shadow-inner">
+                    <span id="hours" class="text-2xl sm:text-4xl font-black text-emerald-400 font-mono block">04</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-400">ساعة</span>
+                </div>
+                <span class="text-2xl font-black text-emerald-400">:</span>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 w-20 sm:w-24 border border-white/10 shadow-inner">
+                    <span id="minutes" class="text-2xl sm:text-4xl font-black text-emerald-400 font-mono block">28</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-400">دقيقة</span>
+                </div>
+                <span class="text-2xl font-black text-emerald-400">:</span>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 w-20 sm:w-24 border border-white/10 shadow-inner">
+                    <span id="seconds" class="text-2xl sm:text-4xl font-black text-emerald-400 font-mono block">45</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-400">ثانية</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE MAIN ORDER FORM (COD Checkout) -->
+        <section id="order-section" class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl shadow-emerald-500/5 border-2 border-emerald-500 relative">
+            
+            <div class="text-center space-y-2 mb-6">
+                <div class="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-1.5 rounded-full font-bold text-xs sm:text-sm border border-emerald-200">
+                    <i class="fa-solid fa-shield-heart text-emerald-600"></i>
+                    <span>طلب آمن 100% | الدفع نقداً عند استلام طلبيتك وفحصها</span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900">
+                    املأ معلوماتك لاستلام طلبك
+                </h3>
+                <p class="text-slate-500 text-xs sm:text-sm">
+                    التوصيل متوفر لجميع الـ 58 ولاية، ولا تدفع أي دينار حتى تفتح وتفحص السلعة بنفسك.
+                </p>
+            </div>
+
+            <form id="order-form" class="space-y-6">
+
+                <!-- Step 1: Quantity / Offer Choice -->
+                <div>
+                    <label class="block font-bold text-slate-900 mb-2.5 text-sm sm:text-base">
+                        1. اختر العرض المناسب لك:
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        
+                        <!-- Offer 1 -->
+                        <label class="relative flex items-center p-4 border-2 border-slate-200 rounded-2xl cursor-pointer hover:border-emerald-500 transition has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/40">
+                            <input type="radio" name="offer_type" value="1" checked class="w-5 h-5 text-emerald-600 accent-emerald-600">
+                            <div class="mr-3 flex-1">
+                                <span class="font-bold text-slate-900 block text-sm sm:text-base">قطعة واحدة (1)</span>
+                                <span class="text-xs text-slate-500">سعر الحبة العادي</span>
+                            </div>
+                            <div class="text-left font-black text-emerald-700">
+                                <span id="offer-price-1" class="text-lg sm:text-xl">--</span> <span class="text-xs">دج</span>
+                            </div>
+                        </label>
+
+                        <!-- Offer 2 (Best Seller) -->
+                        <label class="relative flex items-center p-4 border-2 border-amber-400 bg-amber-50/30 rounded-2xl cursor-pointer hover:border-amber-500 transition has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/50 shadow-xs">
+                            <div class="absolute -top-3 left-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black text-[11px] px-3 py-0.5 rounded-full shadow">
+                                الأكثر طلباً 🔥 توصيل مجاني 0 دج
+                            </div>
+                            <input type="radio" name="offer_type" value="2" class="w-5 h-5 text-emerald-600 accent-emerald-600">
+                            <div class="mr-3 flex-1">
+                                <span class="font-bold text-slate-900 block text-sm sm:text-base">قطعتين (2) - عرض ثنائي</span>
+                                <span class="text-xs text-emerald-700 font-bold">+ توصيل باطل لكامل الولايات!</span>
+                            </div>
+                            <div class="text-left font-black text-emerald-700">
+                                <span id="offer-price-2" class="text-lg sm:text-xl">--</span> <span class="text-xs">دج</span>
+                            </div>
+                        </label>
+
+                    </div>
+                </div>
+
+                <!-- Step 2: Personal Information -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold text-slate-800 text-sm mb-1.5">
+                            الاسم واللقب الكامل <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400">
+                                <i class="fa-regular fa-user"></i>
+                            </span>
+                            <input type="text" id="customer_name" required placeholder="مثلاً: محمد بلقاسم" 
+                                   class="w-full pr-10 pl-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-medium text-sm outline-none transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-slate-800 text-sm mb-1.5">
+                            رقم الهاتف <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-phone"></i>
+                            </span>
+                            <input type="tel" id="customer_phone" required placeholder="05 / 06 / 07 XX XX XX XX" 
+                                   class="w-full pr-10 pl-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-medium text-sm outline-none transition text-left" dir="ltr">
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-1">سيتصل بك الموزع عبر هذا الرقم لتسليمك الشحنة</p>
+                    </div>
+                </div>
+
+                <!-- Step 3: Location (58 Wilayas) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold text-slate-800 text-sm mb-1.5">
+                            الولاية (58 ولاية) <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <select id="wilaya_select" required 
+                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-bold text-sm outline-none transition appearance-none cursor-pointer">
+                                <option value="">-- اختر ولايتك --</option>
+                            </select>
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-slate-800 text-sm mb-1.5">
+                            البلدية أو العنوان بالتفصيل <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="commune_input" required placeholder="مثال: باب الزوار، حي السلام..." 
+                               class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-medium text-sm outline-none transition">
+                    </div>
+                </div>
+
+                <!-- Step 4: Delivery Type (Domicile vs Stop Desk) -->
+                <div>
+                    <label class="block font-bold text-slate-800 text-sm mb-2">
+                        طريقة الاستلام والتوصيل:
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <label class="flex items-center p-3.5 border-2 rounded-2xl cursor-pointer hover:border-emerald-500 transition has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/40">
+                            <input type="radio" name="delivery_type" value="domicile" checked class="w-4 h-4 text-emerald-600 accent-emerald-600">
+                            <div class="mr-3">
+                                <span class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                                    <i class="fa-solid fa-house-chimney text-emerald-600"></i> توصيل لباب المنزل
+                                </span>
+                                <span class="text-[11px] text-slate-500">يوصلك الموزع حتى لعنوانك</span>
+                            </div>
+                        </label>
+
+                        <label class="flex items-center p-3.5 border-2 rounded-2xl cursor-pointer hover:border-emerald-500 transition has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/40">
+                            <input type="radio" name="delivery_type" value="stopdesk" class="w-4 h-4 text-emerald-600 accent-emerald-600">
+                            <div class="mr-3">
+                                <span class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                                    <i class="fa-solid fa-building text-emerald-600"></i> استلام من مكتب التوصيل (Stop Desk)
+                                </span>
+                                <span class="text-[11px] text-emerald-700 font-bold">سعر توصيل أقل وأوفر</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Price Summary Box -->
+                <div class="bg-gradient-to-br from-slate-100 to-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200 space-y-2.5">
+                    <div class="flex justify-between items-center text-sm text-slate-600">
+                        <span>سعر المنتج:</span>
+                        <span id="summary-product-price" class="font-bold text-slate-800">--</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm text-slate-600">
+                        <span>سعر التوصيل (<span id="summary-wilaya-name">اختر الولاية</span>):</span>
+                        <span id="summary-shipping-price" class="font-bold text-slate-800">--</span>
+                    </div>
+                    <div class="border-t border-slate-300/80 pt-2.5 flex justify-between items-center text-base sm:text-lg">
+                        <span class="font-black text-slate-900">المجموع الكلي للدفع عند الاستلام:</span>
+                        <span id="summary-total-price" class="font-black text-emerald-700 text-xl sm:text-2xl">--</span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submit-btn" 
+                        class="shimmer-btn w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 active:scale-[0.99] text-white py-4 rounded-2xl font-black text-lg sm:text-xl shadow-xl shadow-emerald-600/30 transition flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-check-circle text-2xl"></i>
+                    <span>اضغط هنا لتأكيد طلبك الآن</span>
+                </button>
+
+                <p class="text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-lock text-slate-400"></i>
+                    بياناتك الشخصية محفوظة ومحمية بنسبة 100%
+                </p>
+
+            </form>
+        </section>
+
+        <!-- Customer Testimonials (المشار إليها بالطلب الثالث - تحكم كامل) -->
+        <section class="space-y-6 pt-4">
+            <div class="text-center space-y-1">
+                <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">تجارب حقيقية وموثوقة</span>
+                <h3 class="text-xl sm:text-2xl font-black text-slate-900">
+                    آراء وتجارب زبائننا في مختلف الولايات 🇩🇿
+                </h3>
+                <p class="text-xs text-slate-500">تقييمات حقيقية من زبائن اشتروا وجربوا المنتج</p>
+            </div>
+
+            <!-- Existing Customer Reviews Grid -->
+            <div id="reviews-container" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <!-- Dynamically loaded from /api/reviews -->
+            </div>
+
+            <!-- Interactive Add Review Box (خانة إضافة تعليق وتقييم جديد) -->
+            <div class="bg-white rounded-3xl p-5 sm:p-7 border border-emerald-200/80 shadow-lg shadow-emerald-500/5 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                            <i class="fa-solid fa-pen-fancy"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-slate-900 text-sm sm:text-base">شاركنا رأيك وتجربتك حول المنتج</h4>
+                            <p class="text-xs text-slate-500">رأيك يهمنا ويفيد الزبائن الآخرين في اختيارهم</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="public-review-form" class="space-y-4">
+                    <!-- Rating Stars Selector -->
+                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                        <span class="text-xs font-bold text-slate-700">اضغط لتحديد تقييمك بالنجوم:</span>
+                        <div class="flex items-center gap-3">
+                            <div id="star-picker" class="flex items-center gap-1 text-amber-400 text-xl cursor-pointer">
+                                <i class="fa-solid fa-star star-btn transition hover:scale-110" data-value="1"></i>
+                                <i class="fa-solid fa-star star-btn transition hover:scale-110" data-value="2"></i>
+                                <i class="fa-solid fa-star star-btn transition hover:scale-110" data-value="3"></i>
+                                <i class="fa-solid fa-star star-btn transition hover:scale-110" data-value="4"></i>
+                                <i class="fa-solid fa-star star-btn transition hover:scale-110" data-value="5"></i>
+                            </div>
+                            <span id="star-label" class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-lg border border-emerald-200">5 من 5 (ممتاز ⭐)</span>
+                        </div>
+                        <input type="hidden" id="pub_rev_rating" value="5">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">الاسم واللقب الكامل <span class="text-red-500">*</span></label>
+                            <input type="text" id="pub_rev_name" required placeholder="مثال: يونس قندوز" 
+                                   class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold outline-none focus:bg-white focus:ring-2 focus:ring-emerald-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">ولايتك <span class="text-red-500">*</span></label>
+                            <input type="text" id="pub_rev_wilaya" required placeholder="مثال: وهران، سطيف، قسنطينة، باتنة..." 
+                                   class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold outline-none focus:bg-white focus:ring-2 focus:ring-emerald-500 transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">نص تعليقك وتجربتك <span class="text-red-500">*</span></label>
+                        <textarea id="pub_rev_comment" rows="3" required placeholder="اكتب لنا تجربتك مع المنتج، جودته، وطريقة تعامل الموزع..." 
+                                  class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs outline-none focus:bg-white focus:ring-2 focus:ring-emerald-500 transition"></textarea>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                        <span id="review-success-msg" class="text-xs font-bold text-emerald-600 hidden flex items-center gap-1.5 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
+                            <i class="fa-solid fa-circle-check text-sm"></i> شكراً لك! تم نشر تقييمك بنجاح ويظهر الآن في الموقع.
+                        </span>
+                        <button type="submit" id="pub-rev-btn" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:opacity-95 text-white px-6 py-2.5 rounded-xl font-bold text-xs shadow-md shadow-emerald-600/20 transition flex items-center gap-2 mr-auto">
+                            <i class="fa-solid fa-paper-plane"></i> نشر تقييمي الآن
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Sticky Mobile CTA Bar -->
+    <div class="sm:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 z-40 flex items-center justify-between gap-3 shadow-2xl">
+        <div>
+            <span class="text-[11px] text-slate-500 block">السعر:</span>
+            <span id="mobile-price" class="text-lg font-black text-emerald-700">--</span>
+        </div>
+        <a href="#order-section" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center py-2.5 rounded-xl font-black text-sm shadow hover:opacity-95 transition">
+            <i class="fa-solid fa-bolt ml-1"></i> اطلب الآن (دفع عند الاستلام)
+        </a>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl animate-fade-in">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-2xl font-black text-slate-900">تهانينا! تم تسجيل طلبك بنجاح</h3>
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-right space-y-1.5 text-sm">
+                <p><strong>رقم الطلبية:</strong> #<span id="modal-order-id" class="text-emerald-700 font-bold"></span></p>
+                <p><strong>الاسم:</strong> <span id="modal-customer-name"></span></p>
+                <p><strong>الولاية:</strong> <span id="modal-wilaya"></span></p>
+                <p><strong>المبلغ للدفع:</strong> <span id="modal-total" class="text-emerald-700 font-bold"></span></p>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                سيتصل بك فريق خدمة العملاء على رقم هاتفك لتأكيد العنوان وموعد تسليم الشحنة.
+            </p>
+            <button onclick="closeModal()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition">
+                حسناً، فهمت
+            </button>
+        </div>
+    </div>
+
+    <!-- Script for Dynamic Logic -->
+    <script>
+        let wilayasData = [];
+        let activeProduct = null;
+        let landingConfig = null;
+
+        async function init() {
+            try {
+                const [wRes, pRes, cRes, rRes] = await Promise.all([
+                    fetch('/api/wilayas'),
+                    fetch('/api/products/active'),
+                    fetch('/api/landing-config'),
+                    fetch('/api/reviews')
+                ]);
+                wilayasData = await wRes.json();
+                activeProduct = await pRes.json();
+                landingConfig = await cRes.json();
+                const reviews = await rRes.json();
+
+                renderLandingConfig();
+                renderProductDetails();
+                renderReviews(reviews);
+                populateWilayas();
+                updateCalculations();
+            } catch (err) {
+                console.error("Initialization error:", err);
+            }
+        }
+
+        function renderLandingConfig() {
+            if (!landingConfig) return;
+            // Store name & announcements
+            document.getElementById('nav-store-name').innerHTML = `${landingConfig.store_name}`;
+            document.getElementById('announcement-text').textContent = landingConfig.announcement_bar;
+
+            // Badges (المربعات الأربعة)
+            const badgesGrid = document.getElementById('badges-grid');
+            badgesGrid.innerHTML = '';
+            const icons = [
+                { icon: 'fa-shield-halved', color: 'emerald' },
+                { icon: 'fa-hand-holding-dollar', color: 'blue' },
+                { icon: 'fa-truck-fast', color: 'amber' },
+                { icon: 'fa-battery-full', color: 'purple' }
+            ];
+
+            (landingConfig.badges || []).forEach((b, i) => {
+                const ic = icons[i % icons.length];
+                const card = document.createElement('div');
+                card.className = "bg-slate-50/80 hover:bg-white p-3.5 rounded-2xl border border-slate-200/70 transition hover:shadow-md";
+                card.innerHTML = `
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-${ic.color}-100 text-${ic.color}-600 flex items-center justify-center text-lg mb-2">
+                        <i class="fa-solid ${ic.icon}"></i>
+                    </div>
+                    <p class="font-black text-xs sm:text-sm text-slate-800">${b.title}</p>
+                    <p class="text-[11px] text-slate-500 mt-0.5">${b.desc}</p>
+                `;
+                badgesGrid.appendChild(card);
+            });
+
+            // Features Section ("علاش هذا المنتج...؟")
+            document.getElementById('features-main-heading').textContent = landingConfig.features_heading;
+            const featContainer = document.getElementById('features-container');
+            featContainer.innerHTML = '';
+            (landingConfig.features || []).forEach(f => {
+                const item = document.createElement('div');
+                item.className = "flex items-start gap-3 bg-slate-50/70 p-3.5 rounded-2xl border border-slate-100";
+                item.innerHTML = `
+                    <div class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0 mt-0.5">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div>
+                        <strong class="text-slate-900 text-sm block font-bold">${f.title}</strong>
+                        <span class="text-xs text-slate-600 leading-relaxed block mt-0.5">${f.desc}</span>
+                    </div>
+                `;
+                featContainer.appendChild(item);
+            });
+
+            // Countdown
+            const cdSec = document.getElementById('countdown-section');
+            if (landingConfig.countdown_enabled) {
+                cdSec.classList.remove('hidden');
+                document.getElementById('countdown-title-text').textContent = landingConfig.countdown_text;
+            } else {
+                cdSec.classList.add('hidden');
+            }
+        }
+
+        function renderProductDetails() {
+            if (!activeProduct) return;
+            document.getElementById('page-title').textContent = `${activeProduct.title} | ${landingConfig?.store_name || 'DZ Store'}`;
+            document.getElementById('hero-title').textContent = activeProduct.title;
+            document.getElementById('hero-subtitle').textContent = activeProduct.subtitle || '';
+            document.getElementById('main-image').src = activeProduct.image_url;
+            
+            document.getElementById('offer-price-1').textContent = activeProduct.price_1.toLocaleString();
+            document.getElementById('offer-price-2').textContent = activeProduct.price_2.toLocaleString();
+            document.getElementById('mobile-price').textContent = `${activeProduct.price_1.toLocaleString()} دج`;
+        }
+
+        function renderReviews(reviews) {
+            const container = document.getElementById('reviews-container');
+            container.innerHTML = '';
+            reviews.forEach(r => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2.5";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="font-black text-sm text-slate-900 block">${r.author_name}</span>
+                            <span class="text-[11px] text-slate-500">📍 ولاية: ${r.wilaya_name}</span>
+                        </div>
+                        <div class="text-amber-400 text-xs">${'⭐'.repeat(r.rating)}</div>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed">"${r.comment}"</p>
+                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                        <span class="text-emerald-600 font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-circle-check text-xs"></i> مشتري مؤكد
+                        </span>
+                        <span class="text-slate-400 text-[10px]">${r.created_at || ''}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function populateWilayas() {
+            const select = document.getElementById('wilaya_select');
+            select.innerHTML = '<option value="">-- اختر ولايتك (58 ولاية) --</option>';
+            wilayasData.forEach(w => {
+                const opt = document.createElement('option');
+                opt.value = w.code;
+                opt.textContent = `${String(w.code).padStart(2, '0')} - ${w.name_ar} (${w.name_fr})`;
+                select.appendChild(opt);
+            });
+        }
+
+        function updateCalculations() {
+            if (!activeProduct) return;
+            const offerRadio = document.querySelector('input[name="offer_type"]:checked');
+            const qty = offerRadio ? parseInt(offerRadio.value) : 1;
+            const wilayaCode = parseInt(document.getElementById('wilaya_select').value);
+            const deliveryType = document.querySelector('input[name="delivery_type"]:checked').value;
+
+            let productPrice = qty === 2 ? activeProduct.price_2 : (activeProduct.price_1 * qty);
+            let shippingPrice = 0;
+            let wilayaName = "اختر الولاية";
+
+            const wilaya = wilayasData.find(w => w.code === wilayaCode);
+            if (wilaya) {
+                wilayaName = wilaya.name_ar;
+                if (qty >= 2) {
+                    shippingPrice = 0;
+                } else {
+                    shippingPrice = deliveryType === 'domicile' ? wilaya.domicile : wilaya.stopdesk;
+                }
+            }
+
+            document.getElementById('summary-product-price').textContent = `${productPrice.toLocaleString()} دج`;
+            document.getElementById('summary-wilaya-name').textContent = wilayaName;
+
+            if (qty >= 2) {
+                document.getElementById('summary-shipping-price').innerHTML = '<span class="text-emerald-600 font-black">مجاني 0 دج 🔥</span>';
+            } else if (wilaya) {
+                document.getElementById('summary-shipping-price').textContent = `${shippingPrice.toLocaleString()} دج`;
+            } else {
+                document.getElementById('summary-shipping-price').textContent = '--';
+            }
+
+            if (wilaya) {
+                const total = productPrice + shippingPrice;
+                document.getElementById('summary-total-price').textContent = `${total.toLocaleString()} دج`;
+            } else {
+                document.getElementById('summary-total-price').textContent = `${productPrice.toLocaleString()} دج + التوصيل`;
+            }
+        }
+
+        document.querySelectorAll('input[name="offer_type"]').forEach(r => r.addEventListener('change', updateCalculations));
+        document.querySelectorAll('input[name="delivery_type"]').forEach(r => r.addEventListener('change', updateCalculations));
+        document.getElementById('wilaya_select').addEventListener('change', updateCalculations);
+
+        // Form Submit
+        document.getElementById('order-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('customer_name').value.trim();
+            const phone = document.getElementById('customer_phone').value.trim();
+            const wilayaCode = parseInt(document.getElementById('wilaya_select').value);
+            const commune = document.getElementById('commune_input').value.trim();
+            const offerRadio = document.querySelector('input[name="offer_type"]:checked');
+            const qty = offerRadio ? parseInt(offerRadio.value) : 1;
+            const deliveryType = document.querySelector('input[name="delivery_type"]:checked').value;
+
+            if (!wilayaCode) {
+                alert("يرجى اختيار الولاية من فضلك!");
+                return;
+            }
+
+            const cleanPhone = phone.replace(/[\s-]/g, '');
+            if (cleanPhone.length < 9) {
+                alert("يرجى كتابة رقم هاتف صالح لتأكيد الطلب!");
+                return;
+            }
+
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-2xl"></i> جاري تسجيل طلبك...';
+
+            try {
+                const res = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customer_name: name,
+                        customer_phone: cleanPhone,
+                        wilaya_code: wilayaCode,
+                        commune: commune,
+                        delivery_type: deliveryType,
+                        quantity: qty,
+                        product_id: activeProduct ? activeProduct.id : 1
+                    })
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    document.getElementById('modal-order-id').textContent = data.order_id;
+                    document.getElementById('modal-customer-name').textContent = name;
+                    document.getElementById('modal-wilaya').textContent = data.order.wilaya_name;
+                    document.getElementById('modal-total').textContent = `${data.order.total_price.toLocaleString()} دج`;
+                    document.getElementById('success-modal').classList.remove('hidden');
+
+                    document.getElementById('order-form').reset();
+                    updateCalculations();
+                } else {
+                    alert(data.detail || "حدث خطأ أثناء تسجيل الطلب، يرجى المحاولة ثانية.");
+                }
+            } catch (err) {
+                alert("تعذر الاتصال بالسيرفر، تأكد من تشغيل السيرفر.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-check-circle text-2xl"></i> <span>اضغط هنا لتأكيد طلبك الآن</span>';
+            }
+        });
+
+        function closeModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        // Countdown Timer Logic
+        let totalSeconds = 4 * 3600 + 28 * 60 + 45;
+        setInterval(() => {
+            if (totalSeconds > 0) {
+                totalSeconds--;
+                const h = Math.floor(totalSeconds / 3600);
+                const m = Math.floor((totalSeconds % 3600) / 60);
+                const s = totalSeconds % 60;
+                document.getElementById('hours').textContent = String(h).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+            }
+        }, 1000);
+
+        // ==================== Customer Public Reviews Logic ====================
+        const starLabels = {
+            1: "1 من 5 (سيء)",
+            2: "2 من 5 (مقبول)",
+            3: "3 من 5 (متوسط)",
+            4: "4 من 5 (جيد جداً ⭐)",
+            5: "5 من 5 (ممتاز ⭐)"
+        };
+
+        let selectedStars = 5;
+        document.querySelectorAll('.star-btn').forEach(star => {
+            star.addEventListener('click', function() {
+                selectedStars = parseInt(this.getAttribute('data-value'));
+                document.getElementById('pub_rev_rating').value = selectedStars;
+                document.getElementById('star-label').textContent = starLabels[selectedStars];
+
+                // Update stars color
+                document.querySelectorAll('.star-btn').forEach(s => {
+                    const val = parseInt(s.getAttribute('data-value'));
+                    if (val <= selectedStars) {
+                        s.classList.remove('text-slate-300');
+                        s.classList.add('text-amber-400');
+                    } else {
+                        s.classList.remove('text-amber-400');
+                        s.classList.add('text-slate-300');
+                    }
+                });
+            });
+        });
+
+        // Submit Public Review
+        document.getElementById('public-review-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('pub_rev_name').value.trim();
+            const wilaya = document.getElementById('pub_rev_wilaya').value.trim();
+            const comment = document.getElementById('pub_rev_comment').value.trim();
+            const rating = parseInt(document.getElementById('pub_rev_rating').value);
+
+            const submitBtn = document.getElementById('pub-rev-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري النشر...';
+
+            try {
+                const res = await fetch('/api/reviews', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        author_name: name,
+                        wilaya_name: wilaya,
+                        rating: rating,
+                        comment: comment
+                    })
+                });
+
+                if (res.ok) {
+                    // Prepend new review card instantly to UI
+                    const container = document.getElementById('reviews-container');
+                    const newCard = document.createElement('div');
+                    newCard.className = "bg-white p-4 sm:p-5 rounded-2xl border-2 border-emerald-400 shadow-md space-y-2.5 animate-fade-in";
+                    newCard.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="font-black text-sm text-slate-900 block">${name}</span>
+                                <span class="text-[11px] text-slate-500">📍 ولاية: ${wilaya}</span>
+                            </div>
+                            <div class="text-amber-400 text-xs">${'⭐'.repeat(rating)}</div>
+                        </div>
+                        <p class="text-xs text-slate-700 leading-relaxed font-medium">"${comment}"</p>
+                        <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                            <span class="text-emerald-600 font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check text-xs"></i> مشتري مؤكد
+                            </span>
+                            <span class="text-slate-400 text-[10px]">الآن</span>
+                        </div>
+                    `;
+                    container.prepend(newCard);
+
+                    // Show success notice
+                    const msg = document.getElementById('review-success-msg');
+                    msg.classList.remove('hidden');
+                    document.getElementById('public-review-form').reset();
+                    document.getElementById('star-label').textContent = starLabels[5];
+
+                    setTimeout(() => {
+                        msg.classList.add('hidden');
+                    }, 6000);
+                } else {
+                    alert("حدث خطأ أثناء إرسال تقييمك، يرجى المحاولة ثانية.");
+                }
+            } catch (err) {
+                alert("تعذر الاتصال بالسيرفر لإرسال التقييم.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر تقييمي الآن';
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>

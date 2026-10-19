@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم التاجر المتقدمة | DZ COD Pro</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen">
+
+    <!-- Top Navbar -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <span class="bg-emerald-500 text-slate-950 font-black px-2.5 py-1 rounded-lg text-sm tracking-wider">DZ COD Pro</span>
+                <span class="text-sm font-bold hidden sm:inline text-slate-300">منصة إدارة التجارة والتخصيص الكامل</span>
+            </div>
+
+            <!-- View Live Store Link -->
+            <div class="flex items-center gap-2">
+                <a href="/" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> معاينة صفحة البيع
+                </a>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs Bar -->
+        <div class="max-w-7xl mx-auto px-4 border-t border-slate-800">
+            <nav class="flex space-x-reverse space-x-1 sm:space-x-4 overflow-x-auto text-xs sm:text-sm font-bold py-2">
+                <button onclick="switchTab('orders')" id="tab-btn-orders" class="nav-tab px-3 py-2 rounded-xl text-emerald-400 bg-slate-800 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-list-check"></i> الطلبيات
+                </button>
+                <button onclick="switchTab('customizer')" id="tab-btn-customizer" class="nav-tab px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> تخصيص صفحة الهبوط
+                </button>
+                <button onclick="switchTab('reviews')" id="tab-btn-reviews" class="nav-tab px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-comments"></i> آراء الزبائن
+                </button>
+                <button onclick="switchTab('products')" id="tab-btn-products" class="nav-tab px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-box-open"></i> المنتجات
+                </button>
+                <button onclick="switchTab('shipping')" id="tab-btn-shipping" class="nav-tab px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-truck-fast"></i> التوصيل (58 ولاية)
+                </button>
+                <button onclick="switchTab('settings')" id="tab-btn-settings" class="nav-tab px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-gear"></i> تيليغرام
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 py-6">
+
+        <!-- ==================== TAB 1: ORDERS ==================== -->
+        <section id="tab-orders" class="tab-content space-y-6">
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs font-bold text-slate-500 block mb-1">إجمالي الطلبيات</span>
+                    <span id="stat-total" class="text-2xl font-black text-slate-900">0</span>
+                    <span class="text-[10px] text-slate-400 block mt-1">كل المسجل</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-amber-200 shadow-sm bg-amber-50/20">
+                    <span class="text-xs font-bold text-amber-700 block mb-1">طلبات جديدة</span>
+                    <span id="stat-new" class="text-2xl font-black text-amber-600">0</span>
+                    <span class="text-[10px] text-amber-600/80 block mt-1">بحاجة للاتصال</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-blue-200 shadow-sm bg-blue-50/20">
+                    <span class="text-xs font-bold text-blue-700 block mb-1">طلبات مؤكدة</span>
+                    <span id="stat-confirmed" class="text-2xl font-black text-blue-600">0</span>
+                    <span class="text-[10px] text-blue-600/80 block mt-1">جاهزة للشحن</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-emerald-200 shadow-sm bg-emerald-50/20">
+                    <span class="text-xs font-bold text-emerald-700 block mb-1">تم التسليم</span>
+                    <span id="stat-delivered" class="text-2xl font-black text-emerald-600">0</span>
+                    <span class="text-[10px] text-emerald-600/80 block mt-1">محصلة</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-red-200 shadow-sm bg-red-50/20">
+                    <span class="text-xs font-bold text-red-700 block mb-1">ملغية / ريتور</span>
+                    <span id="stat-cancelled" class="text-2xl font-black text-red-600">0</span>
+                    <span class="text-[10px] text-red-600/80 block mt-1">ملغاة</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs font-bold text-slate-500 block mb-1">المداخيل</span>
+                    <span id="stat-revenue" class="text-xl font-black text-emerald-700">0 دج</span>
+                    <span id="stat-rate" class="text-[10px] text-slate-500 block mt-1">نسبة التأكيد: 0%</span>
+                </div>
+            </div>
+
+            <!-- Controls: Search & Filters -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-2 md:pb-0 text-xs font-bold">
+                    <button onclick="setFilter('all')" class="filter-tab px-3 py-2 rounded-xl transition bg-slate-900 text-white" data-status="all">الكل</button>
+                    <button onclick="setFilter('nouveau')" class="filter-tab px-3 py-2 rounded-xl transition bg-slate-100 text-slate-700 hover:bg-slate-200" data-status="nouveau">جديد 🟡</button>
+                    <button onclick="setFilter('confirme')" class="filter-tab px-3 py-2 rounded-xl transition bg-slate-100 text-slate-700 hover:bg-slate-200" data-status="confirme">مؤكد 🔵</button>
+                    <button onclick="setFilter('expedie')" class="filter-tab px-3 py-2 rounded-xl transition bg-slate-100 text-slate-700 hover:bg-slate-200" data-status="expedie">تم الشحن 🚚</button>
+                    <button onclick="setFilter('livre')" class="filter-tab px-3 py-2 rounded-xl transition bg-slate-100 text-slate-700 hover:bg-slate-200" data-status="livre">مسلمة ✅</button>
+                    <button onclick="setFilter('annule')" class="filter-tab px-3 py-2 rounded-xl transition bg-slate-100 text-slate-700 hover:bg-slate-200" data-status="annule">ملغي ❌</button>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <div class="relative flex-1 md:w-64">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                        </span>
+                        <input type="text" id="search-input" placeholder="بحث بالاسم، الهاتف أو الولاية..." 
+                               class="w-full pr-8 pl-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+                    </div>
+                    <a href="/api/export-csv" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow whitespace-nowrap">
+                        <i class="fa-solid fa-file-excel"></i> تصدير (Excel)
+                    </a>
+                </div>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs">
+                        <thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="px-4 py-3">#ID / التاريخ</th>
+                                <th class="px-4 py-3">الزبون والعنوان</th>
+                                <th class="px-4 py-3">رقم الهاتف والتواصل</th>
+                                <th class="px-4 py-3">التوصيل</th>
+                                <th class="px-4 py-3">الطلب والمبلغ</th>
+                                <th class="px-4 py-3">الحالة</th>
+                                <th class="px-4 py-3 text-center">إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-tbody" class="divide-y divide-slate-100 font-medium"></tbody>
+                    </table>
+                </div>
+                <div id="orders-empty" class="hidden py-12 text-center text-slate-400 space-y-2">
+                    <i class="fa-solid fa-inbox text-4xl"></i>
+                    <p class="font-bold text-sm">لا توجد طلبيات تطابق هذا البحث</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 2: LANDING CUSTOMIZER ==================== -->
+        <section id="tab-customizer" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div>
+                    <h2 class="text-lg font-black text-slate-900">🎨 تخصيص نصوص ومميزات صفحة الهبوط</h2>
+                    <p class="text-xs text-slate-500">تحكم كامل في اسم متجرك، الأيقونات الأربعة، عنوان ونقاط المميزات، والعداد التنازلي.</p>
+                </div>
+
+                <form id="landing-customizer-form" class="space-y-6">
+                    
+                    <!-- 1. Store Identity -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-store text-emerald-600"></i> هوية المتجر والشريط العلوي:
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">اسم المتجر (يظهر في الأعلى وفي الترويسة):</label>
+                                <input type="text" id="cust_store_name" required class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">نص الشريط الإعلاني العلوي (الأحمر):</label>
+                                <input type="text" id="cust_announcement_bar" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. The 4 Trust Badges (هدو المشار إليهم بالصورة) -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-heart text-emerald-600"></i> الأيقونات والمميزات الأربعة السريعة (المربعات الأربعة):
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                            <!-- Badge 1 -->
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
+                                <span class="text-xs font-black text-emerald-700 block">الميزة 1 (الضمان)</span>
+                                <input type="text" id="cust_b1_title" placeholder="العنوان (مثلا: ضمان استبدال)" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold outline-none focus:ring-1 focus:ring-emerald-500">
+                                <input type="text" id="cust_b1_desc" placeholder="الوصف (مثلا: 7 أيام تجربة)" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-1 focus:ring-emerald-500">
+                            </div>
+                            <!-- Badge 2 -->
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
+                                <span class="text-xs font-black text-emerald-700 block">الميزة 2 (الدفع)</span>
+                                <input type="text" id="cust_b2_title" placeholder="العنوان (مثلا: دفع عند الاستلام)" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold outline-none focus:ring-1 focus:ring-emerald-500">
+                                <input type="text" id="cust_b2_desc" placeholder="الوصف (مثلا: حتى تقلب وتتأكد)" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-1 focus:ring-emerald-500">
+                            </div>
+                            <!-- Badge 3 -->
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
+                                <span class="text-xs font-black text-emerald-700 block">الميزة 3 (التوصيل)</span>
+                                <input type="text" id="cust_b3_title" placeholder="العنوان (مثلا: توصيل سريع)" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold outline-none focus:ring-1 focus:ring-emerald-500">
+                                <input type="text" id="cust_b3_desc" placeholder="الوصف (مثلا: من 24 إلى 48 ساعة)" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-1 focus:ring-emerald-500">
+                            </div>
+                            <!-- Badge 4 -->
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
+                                <span class="text-xs font-black text-emerald-700 block">الميزة 4 (ميزة إضافية)</span>
+                                <input type="text" id="cust_b4_title" placeholder="العنوان (مثلا: جودة أصلية)" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold outline-none focus:ring-1 focus:ring-emerald-500">
+                                <input type="text" id="cust_b4_desc" placeholder="الوصف (مثلا: تدوم حتى 5 أيام)" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-1 focus:ring-emerald-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Features Section ("علاش هذا المنتج...؟") -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <h3 class="font-bold text-sm text-slate-800 flex items-center justify-between">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-list-check text-emerald-600"></i> قسم "علاش هذا المنتج هو الاختيار الأفضل ليك؟" والنقاط:</span>
+                        </h3>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">عنوان القسم الرئيسي:</label>
+                            <input type="text" id="cust_features_heading" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+
+                        <!-- Features list items -->
+                        <div id="features-list-container" class="space-y-2">
+                            <!-- Injected dynamically -->
+                        </div>
+                        <button type="button" onclick="addFeatureItem()" class="text-xs font-bold text-emerald-700 bg-emerald-100 hover:bg-emerald-200 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus"></i> إضافة نقطة ميزة أخرى
+                        </button>
+                    </div>
+
+                    <!-- 4. Countdown Timer Control -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-stopwatch text-red-600"></i> العداد التنازلي الترويجي (Countdown Timer):
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">حالة العداد:</label>
+                                <select id="cust_countdown_enabled" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold outline-none">
+                                    <option value="1">مفعّل ويظهر في الموقع 🟢</option>
+                                    <option value="0">معطّل ومخفي ⚪</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">نص العداد (فوق الساعات):</label>
+                                <input type="text" id="cust_countdown_text" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">عدد الساعات:</label>
+                                <input type="number" id="cust_countdown_hours" min="1" max="72" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-2">
+                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-xs shadow-md transition flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> حفظ كافة التعديلات في الموقع
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 3: CUSTOMER REVIEWS ==================== -->
+        <section id="tab-reviews" class="tab-content hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <div>
+                    <h2 class="text-lg font-black text-slate-900">⭐ إدارة آراء وتقييمات الزبائن (Testimonials)</h2>
+                    <p class="text-xs text-slate-500">حط أنت التعليقات لي تعجبك باش تزيد ثقة الزبائن ومبيعاتك في صفحة البيع.</p>
+                </div>
+                <button onclick="openReviewModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs shadow flex items-center gap-2 transition">
+                    <i class="fa-solid fa-plus"></i> إضافة تعليق زبون جديد
+                </button>
+            </div>
+
+            <!-- Reviews List Grid -->
+            <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- ==================== TAB 4: PRODUCTS MANAGER ==================== -->
+        <section id="tab-products" class="tab-content hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <div>
+                    <h2 class="text-lg font-black text-slate-900">إدارة المنتجات وصفحات الهبوط</h2>
+                    <p class="text-xs text-slate-500">أضف منتجاتك الجديدة، عدل الصور والأسعار، واختر المنتج النشط في صفحة البيع.</p>
+                </div>
+                <button onclick="openProductModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs shadow flex items-center gap-2 transition">
+                    <i class="fa-solid fa-plus"></i> إضافة منتج جديد
+                </button>
+            </div>
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- ==================== TAB 5: SHIPPING RATES (58 WILAYAS) ==================== -->
+        <section id="tab-shipping" class="tab-content hidden space-y-6">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-lg font-black text-slate-900">أسعار التوصيل لـ 58 ولاية جزائرية 🇩🇿</h2>
+                    <p class="text-xs text-slate-500">عدل سعر التوصيل للمنزل أو المكتب (Stop Desk) لكل ولاية بشكل فردي أو جماعي.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="openBulkShippingModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> تطبيق سعر موحد
+                    </button>
+                    <button onclick="resetShippingRates()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3.5 py-2 rounded-xl font-bold text-xs transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate-left"></i> استعادة أسعار ياليدين الأصلية
+                    </button>
+                </div>
+            </div>
+
+            <!-- Shipping Table -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-3 bg-slate-50 border-b flex items-center justify-between">
+                    <input type="text" id="shipping-search" placeholder="ابحث عن ولاية بالاسم أو الرقم..." 
+                           class="w-full sm:w-72 px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
+                    <table class="w-full text-right text-xs">
+                        <thead class="bg-slate-100 text-slate-600 font-bold sticky top-0 border-b">
+                            <tr>
+                                <th class="px-4 py-3">رقم الولاية</th>
+                                <th class="px-4 py-3">اسم الولاية</th>
+                                <th class="px-4 py-3">توصيل لباب المنزل (Domicile)</th>
+                                <th class="px-4 py-3">استلام من المكتب (Stop Desk)</th>
+                                <th class="px-4 py-3">الحالة</th>
+                                <th class="px-4 py-3 text-center">إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="shipping-tbody" class="divide-y divide-slate-100 font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 6: SETTINGS & TELEGRAM ==================== -->
+        <section id="tab-settings" class="tab-content hidden space-y-6">
+            <div class="max-w-2xl bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+                <h2 class="text-lg font-black text-slate-900 border-b pb-3 flex items-center gap-2">
+                    <i class="fa-brands fa-telegram text-sky-500 text-xl"></i> إعدادات إشعارات تيليغرام الفورية
+                </h2>
+                <form id="telegram-settings-form" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Telegram Bot Token (من @BotFather):</label>
+                        <input type="text" id="setting_bot_token" placeholder="مثال: 72839210:AAHq5z9K..." 
+                               class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono outline-none focus:ring-2 focus:ring-sky-500" dir="ltr">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Chat ID (معرف حسابك من @userinfobot):</label>
+                        <input type="text" id="setting_chat_id" placeholder="مثال: 123456789" 
+                               class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono outline-none focus:ring-2 focus:ring-sky-500" dir="ltr">
+                    </div>
+                    <div class="pt-2">
+                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold text-xs shadow transition">
+                            حفظ إعدادات تيليغرام
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- Add Review Modal -->
+    <div id="review-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b pb-2">
+                <h3 class="text-base font-black text-slate-900">إضافة رأي / تقييم زبون جديد</h3>
+                <button onclick="closeReviewModal()" class="text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="review-form" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">اسم الزبون:</label>
+                    <input type="text" id="rev_author" required placeholder="مثال: عبد القادر م." class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">الولاية:</label>
+                    <input type="text" id="rev_wilaya" required placeholder="مثال: عنابة" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">التقييم بالنجوم:</label>
+                    <select id="rev_rating" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold outline-none">
+                        <option value="5">⭐⭐⭐⭐⭐ (5 من 5 - ممتاز)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 من 5 - جيد جداً)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">نص التعليق والتجربة:</label>
+                    <textarea id="rev_comment" rows="3" required placeholder="مثال: ما شاء الله سلعة هايلة وتوصيل سريع في يومين..." class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t">
+                    <button type="button" onclick="closeReviewModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600">إلغاء</button>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-xl text-xs font-bold shadow">إضافة التعليق</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Create/Edit Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 id="product-modal-title" class="text-base font-black text-slate-900">إضافة منتج جديد</h3>
+                <button onclick="closeProductModal()" class="text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="product-form" class="space-y-3.5">
+                <input type="hidden" id="prod_id">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">عنوان المنتج (العريض):</label>
+                    <input type="text" id="prod_title" required placeholder="مثال: ساعة Smart Watch Ultra 9" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">العنوان الفرعي / الهدايا المرفقة:</label>
+                    <input type="text" id="prod_subtitle" placeholder="مثال: + 3 أحزمة ملونة وشاحن لاسلكي مجاناً!" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">رابط صورة المنتج (URL):</label>
+                    <input type="url" id="prod_image" required placeholder="https://..." class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono outline-none focus:ring-2 focus:ring-emerald-500" dir="ltr">
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">سعر 1 حبة (دج):</label>
+                        <input type="number" id="prod_price1" required class="w-full px-2.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-black text-emerald-700 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">سعر 2 حبات (عرض):</label>
+                        <input type="number" id="prod_price2" required class="w-full px-2.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-black text-emerald-700 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">سعر 3 قطع:</label>
+                        <input type="number" id="prod_price3" required class="w-full px-2.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-black text-emerald-700 outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">السعر الأصلي المشطوب:</label>
+                    <input type="number" id="prod_original_price" placeholder="مثال: 8200" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">وصف المنتج:</label>
+                    <textarea id="prod_desc" rows="3" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t">
+                    <button type="button" onclick="closeProductModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600">إلغاء</button>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-xl text-xs font-bold shadow">حفظ المنتج</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bulk Shipping Modal -->
+    <div id="bulk-shipping-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl">
+            <h3 class="text-base font-black text-slate-900 border-b pb-2">تطبيق سعر موحد لجميع الـ 58 ولاية</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">سعر موحد للمنزل (دج):</label>
+                    <input type="number" id="bulk_domicile" placeholder="مثلاً: 500" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">سعر موحد للمكتب Stop Desk (دج):</label>
+                    <input type="number" id="bulk_stopdesk" placeholder="مثلاً: 350" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeBulkShippingModal()" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600">إلغاء</button>
+                <button onclick="applyBulkShipping()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-xl text-xs font-bold shadow">تطبيق على الـ 58 ولاية</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- App JavaScript -->
+    <script>
+        let currentStatusFilter = 'all';
+        let searchQuery = '';
+        let allShippingRates = [];
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-tab').forEach(el => {
+                el.className = "nav-tab px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition flex items-center gap-2 whitespace-nowrap";
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            activeBtn.className = "nav-tab px-3 py-2 rounded-xl text-emerald-400 bg-slate-800 flex items-center gap-2 whitespace-nowrap";
+
+            if (tabName === 'orders') loadOrders();
+            if (tabName === 'customizer') loadLandingConfig();
+            if (tabName === 'reviews') loadReviews();
+            if (tabName === 'products') loadProducts();
+            if (tabName === 'shipping') loadShippingRates();
+            if (tabName === 'settings') loadSettings();
+        }
+
+        // ==================== TAB 1: ORDERS ====================
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/stats');
+                const data = await res.json();
+                document.getElementById('stat-total').textContent = data.total_orders;
+                document.getElementById('stat-new').textContent = data.new_orders;
+                document.getElementById('stat-confirmed').textContent = data.confirmed_orders;
+                document.getElementById('stat-delivered').textContent = data.delivered_orders;
+                document.getElementById('stat-cancelled').textContent = data.cancelled_orders;
+                document.getElementById('stat-revenue').textContent = `${data.total_revenue.toLocaleString()} دج`;
+                document.getElementById('stat-rate').textContent = `نسبة التأكيد: ${data.confirmation_rate}%`;
+            } catch (err) { console.error(err); }
+        }
+
+        async function loadOrders() {
+            try {
+                let url = `/api/orders?status=${currentStatusFilter}`;
+                if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
+                const res = await fetch(url);
+                const orders = await res.json();
+                renderOrders(orders);
+                loadStats();
+            } catch (err) { console.error(err); }
+        }
+
+        function renderOrders(orders) {
+            const tbody = document.getElementById('orders-tbody');
+            const empty = document.getElementById('orders-empty');
+            tbody.innerHTML = '';
+            if (orders.length === 0) {
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            orders.forEach(o => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/80 transition";
+                const delivBadge = o.delivery_type === 'domicile'
+                    ? `<span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-md font-bold text-[11px] inline-flex items-center gap-1"><i class="fa-solid fa-house"></i> منزل</span>`
+                    : `<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-md font-bold text-[11px] inline-flex items-center gap-1"><i class="fa-solid fa-building"></i> Stop Desk</span>`;
+
+                const cleanPhone = o.customer_phone.replace(/^0/, '');
+                const waMessage = encodeURIComponent(
+                    `السلام عليكم خويا/أختي ${o.customer_name}، معاك متجر DZ Store.\nبخصوص طلبيتك لـ (${o.product_name}) لولاية ${o.wilaya_name} بمبلغ ${o.total_price} دج، هل تأكد الطلبية باش نبعثوها لك غدوة إن شاء الله؟`
+                );
+
+                tr.innerHTML = `
+                    <td class="px-4 py-3.5">
+                        <span class="font-black text-slate-900 block">#${o.id}</span>
+                        <span class="text-[10px] text-slate-400 block">${o.created_at}</span>
+                    </td>
+                    <td class="px-4 py-3.5">
+                        <span class="font-bold text-slate-900 block">${o.customer_name}</span>
+                        <span class="text-[11px] text-slate-500 block">${o.wilaya_code} - ${o.wilaya_name} (${o.commune})</span>
+                    </td>
+                    <td class="px-4 py-3.5">
+                        <span class="font-mono text-slate-800 font-bold block text-left" dir="ltr">${o.customer_phone}</span>
+                        <div class="flex items-center gap-1 mt-1">
+                            <a href="tel:${o.customer_phone}" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold">
+                                <i class="fa-solid fa-phone"></i> اتصال
+                            </a>
+                            <a href="https://wa.me/213${cleanPhone}?text=${waMessage}" target="_blank" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold flex items-center gap-1">
+                                <i class="fa-brands fa-whatsapp text-emerald-600"></i> واتساب
+                            </a>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3.5">
+                        ${delivBadge}
+                        <span class="text-[10px] text-slate-400 block mt-1">${o.shipping_price > 0 ? o.shipping_price + ' دج' : 'توصيل مجاني'}</span>
+                    </td>
+                    <td class="px-4 py-3.5">
+                        <span class="font-bold text-slate-900 block">${o.quantity} قطع (${o.product_name})</span>
+                        <span class="font-black text-emerald-700 text-sm block">${o.total_price.toLocaleString()} دج</span>
+                    </td>
+                    <td class="px-4 py-3.5">
+                        <select onchange="updateOrderStatus(${o.id}, this.value)" class="text-xs font-bold px-2 py-1 rounded-xl border border-slate-300 outline-none cursor-pointer">
+                            <option value="nouveau" ${o.status === 'nouveau' ? 'selected' : ''}>🟡 جديد</option>
+                            <option value="confirme" ${o.status === 'confirme' ? 'selected' : ''}>🔵 مؤكد</option>
+                            <option value="expedie" ${o.status === 'expedie' ? 'selected' : ''}>🚚 تم الشحن</option>
+                            <option value="livre" ${o.status === 'livre' ? 'selected' : ''}>✅ تم التسليم</option>
+                            <option value="annule" ${o.status === 'annule' ? 'selected' : ''}>❌ ملغي</option>
+                        </select>
+                    </td>
+                    <td class="px-4 py-3.5 text-center">
+                        <button onclick="deleteOrder(${o.id})" class="text-slate-400 hover:text-red-600 p-1 transition" title="حذف">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function updateOrderStatus(orderId, newStatus) {
+            await fetch(`/api/orders/${orderId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+            });
+            loadStats();
+        }
+
+        async function deleteOrder(orderId) {
+            if (!confirm(`حذف الطلب #${orderId}؟`)) return;
+            await fetch(`/api/orders/${orderId}`, { method: 'DELETE' });
+            loadOrders();
+        }
+
+        function setFilter(status) {
+            currentStatusFilter = status;
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                if (tab.getAttribute('data-status') === status) {
+                    tab.className = "filter-tab px-3 py-2 rounded-xl transition bg-slate-900 text-white";
+                } else {
+                    tab.className = "filter-tab px-3 py-2 rounded-xl transition bg-slate-100 text-slate-700 hover:bg-slate-200";
+                }
+            });
+            loadOrders();
+        }
+
+        let searchDebounce;
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(() => {
+                searchQuery = e.target.value.trim();
+                loadOrders();
+            }, 300);
+        });
+
+        // ==================== TAB 2: LANDING CUSTOMIZER ====================
+        let currentFeatures = [];
+
+        async function loadLandingConfig() {
+            try {
+                const res = await fetch('/api/landing-config');
+                const cfg = await res.json();
+                document.getElementById('cust_store_name').value = cfg.store_name || '';
+                document.getElementById('cust_announcement_bar').value = cfg.announcement_bar || '';
+
+                if (cfg.badges && cfg.badges.length >= 4) {
+                    document.getElementById('cust_b1_title').value = cfg.badges[0].title || '';
+                    document.getElementById('cust_b1_desc').value = cfg.badges[0].desc || '';
+                    document.getElementById('cust_b2_title').value = cfg.badges[1].title || '';
+                    document.getElementById('cust_b2_desc').value = cfg.badges[1].desc || '';
+                    document.getElementById('cust_b3_title').value = cfg.badges[2].title || '';
+                    document.getElementById('cust_b3_desc').value = cfg.badges[2].desc || '';
+                    document.getElementById('cust_b4_title').value = cfg.badges[3].title || '';
+                    document.getElementById('cust_b4_desc').value = cfg.badges[3].desc || '';
+                }
+
+                document.getElementById('cust_features_heading').value = cfg.features_heading || '';
+                currentFeatures = cfg.features || [];
+                renderFeaturesInputs();
+
+                document.getElementById('cust_countdown_enabled').value = cfg.countdown_enabled ? '1' : '0';
+                document.getElementById('cust_countdown_text').value = cfg.countdown_text || '';
+                document.getElementById('cust_countdown_hours').value = cfg.countdown_hours || 4;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function renderFeaturesInputs() {
+            const container = document.getElementById('features-list-container');
+            container.innerHTML = '';
+            currentFeatures.forEach((f, idx) => {
+                const row = document.createElement('div');
+                row.className = "flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-200";
+                row.innerHTML = `
+                    <span class="text-xs font-bold text-slate-400 w-5 text-center">${idx + 1}</span>
+                    <input type="text" value="${f.title}" placeholder="عنوان الميزة" onchange="updateFeatureItem(${idx}, 'title', this.value)" 
+                           class="w-1/3 px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold outline-none focus:ring-1 focus:ring-emerald-500">
+                    <input type="text" value="${f.desc}" placeholder="تفاصيل الميزة" onchange="updateFeatureItem(${idx}, 'desc', this.value)" 
+                           class="flex-1 px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-1 focus:ring-emerald-500">
+                    <button type="button" onclick="removeFeatureItem(${idx})" class="text-red-500 hover:text-red-700 px-2 py-1"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function addFeatureItem() {
+            currentFeatures.push({ title: "ميزة جديدة", desc: "اكتب تفاصيل هذه الميزة هنا..." });
+            renderFeaturesInputs();
+        }
+
+        function updateFeatureItem(idx, key, val) {
+            currentFeatures[idx][key] = val;
+        }
+
+        function removeFeatureItem(idx) {
+            currentFeatures.splice(idx, 1);
+            renderFeaturesInputs();
+        }
+
+        document.getElementById('landing-customizer-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const payload = {
+                store_name: document.getElementById('cust_store_name').value.trim(),
+                announcement_bar: document.getElementById('cust_announcement_bar').value.trim(),
+                badge_1_title: document.getElementById('cust_b1_title').value.trim(),
+                badge_1_desc: document.getElementById('cust_b1_desc').value.trim(),
+                badge_2_title: document.getElementById('cust_b2_title').value.trim(),
+                badge_2_desc: document.getElementById('cust_b2_desc').value.trim(),
+                badge_3_title: document.getElementById('cust_b3_title').value.trim(),
+                badge_3_desc: document.getElementById('cust_b3_desc').value.trim(),
+                badge_4_title: document.getElementById('cust_b4_title').value.trim(),
+                badge_4_desc: document.getElementById('cust_b4_desc').value.trim(),
+                features_heading: document.getElementById('cust_features_heading').value.trim(),
+                features_json: JSON.stringify(currentFeatures),
+                countdown_enabled: document.getElementById('cust_countdown_enabled').value,
+                countdown_text: document.getElementById('cust_countdown_text').value.trim(),
+                countdown_hours: document.getElementById('cust_countdown_hours').value
+            };
+
+            await fetch('/api/landing-config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            alert("تم حفظ تخصيصات صفحة الهبوط بنجاح! افتح صفحة البيع لرؤية التغييرات.");
+        });
+
+        // ==================== TAB 3: REVIEWS ====================
+        async function loadReviews() {
+            try {
+                const res = await fetch('/api/reviews');
+                const reviews = await res.json();
+                const grid = document.getElementById('reviews-grid');
+                grid.innerHTML = '';
+                reviews.forEach(r => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-3";
+                    card.innerHTML = `
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-black text-sm text-slate-900">${r.author_name}</h4>
+                                    <span class="text-[11px] text-slate-500">📍 ولاية: ${r.wilaya_name}</span>
+                                </div>
+                                <div class="text-amber-400 text-xs">
+                                    ${'⭐'.repeat(r.rating)}
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                                "${r.comment}"
+                            </p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t text-[11px]">
+                            <span class="text-emerald-600 font-bold">✓ يظهر في صفحة البيع</span>
+                            <button onclick="deleteReview(${r.id})" class="text-red-500 hover:text-red-700 font-bold">
+                                <i class="fa-regular fa-trash-can"></i> حذف
+                            </button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (err) { console.error(err); }
+        }
+
+        function openReviewModal() {
+            document.getElementById('review-form').reset();
+            document.getElementById('review-modal').classList.remove('hidden');
+        }
+        function closeReviewModal() {
+            document.getElementById('review-modal').classList.add('hidden');
+        }
+
+        document.getElementById('review-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const payload = {
+                author_name: document.getElementById('rev_author').value.trim(),
+                wilaya_name: document.getElementById('rev_wilaya').value.trim(),
+                rating: parseInt(document.getElementById('rev_rating').value),
+                comment: document.getElementById('rev_comment').value.trim()
+            };
+            await fetch('/api/reviews', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            closeReviewModal();
+            loadReviews();
+        });
+
+        async function deleteReview(id) {
+            if (!confirm("هل أنت متأكد من حذف هذا التعليق؟")) return;
+            await fetch(`/api/reviews/${id}`, { method: 'DELETE' });
+            loadReviews();
+        }
+
+        // ==================== TAB 4: PRODUCTS ====================
+        async function loadProducts() {
+            try {
+                const res = await fetch('/api/products');
+                const products = await res.json();
+                const grid = document.getElementById('products-grid');
+                grid.innerHTML = '';
+                products.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = `bg-white rounded-3xl border ${p.is_active ? 'border-2 border-emerald-500 shadow-md ring-2 ring-emerald-100' : 'border-slate-200 shadow-sm'} overflow-hidden flex flex-col justify-between`;
+                    card.innerHTML = `
+                        <div>
+                            <div class="relative h-48 bg-slate-100">
+                                <img src="${p.image_url}" class="w-full h-full object-cover">
+                                ${p.is_active ? '<span class="absolute top-3 right-3 bg-emerald-600 text-white font-bold text-xs px-2.5 py-1 rounded-xl shadow">معروض في صفحة البيع ✅</span>' : ''}
+                            </div>
+                            <div class="p-4 space-y-2">
+                                <h3 class="font-black text-slate-900 text-base">${p.title}</h3>
+                                <p class="text-xs text-slate-500">${p.subtitle || ''}</p>
+                                <div class="bg-slate-50 p-2.5 rounded-xl space-y-1 text-xs">
+                                    <div class="flex justify-between"><span>سعر حبة (1):</span> <strong class="text-emerald-700">${p.price_1.toLocaleString()} دج</strong></div>
+                                    <div class="flex justify-between"><span>سعر قطعتين (2):</span> <strong class="text-emerald-700">${p.price_2.toLocaleString()} دج</strong></div>
+                                    <div class="flex justify-between"><span>سعر 3 قطع:</span> <strong class="text-emerald-700">${p.price_3.toLocaleString()} دج</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-slate-50 border-t flex items-center justify-between gap-2">
+                            ${!p.is_active ? `
+                                <button onclick="activateProduct(${p.id})" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 px-3 rounded-xl text-xs font-bold transition">
+                                    تفعيل في الموقع
+                                </button>
+                            ` : '<span class="text-xs font-bold text-emerald-700">هو المعروض حالياً</span>'}
+                            <button onclick="editProduct(${JSON.stringify(p).replace(/"/g, '&quot;')})" class="bg-slate-200 hover:bg-slate-300 text-slate-700 py-1.5 px-3 rounded-xl text-xs font-bold transition">
+                                تعديل
+                            </button>
+                            ${!p.is_active ? `
+                                <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 p-1.5 transition">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (err) { console.error(err); }
+        }
+
+        function openProductModal(prod = null) {
+            document.getElementById('product-form').reset();
+            if (prod) {
+                document.getElementById('product-modal-title').textContent = "تعديل المنتج";
+                document.getElementById('prod_id').value = prod.id;
+                document.getElementById('prod_title').value = prod.title;
+                document.getElementById('prod_subtitle').value = prod.subtitle || '';
+                document.getElementById('prod_image').value = prod.image_url;
+                document.getElementById('prod_price1').value = prod.price_1;
+                document.getElementById('prod_price2').value = prod.price_2;
+                document.getElementById('prod_price3').value = prod.price_3;
+                document.getElementById('prod_original_price').value = prod.original_price || '';
+                document.getElementById('prod_desc').value = prod.description || '';
+            } else {
+                document.getElementById('product-modal-title').textContent = "إضافة منتج جديد";
+                document.getElementById('prod_id').value = '';
+            }
+            document.getElementById('product-modal').classList.remove('hidden');
+        }
+        function closeProductModal() { document.getElementById('product-modal').classList.add('hidden'); }
+        function editProduct(prod) { openProductModal(prod); }
+
+        async function activateProduct(id) {
+            await fetch(`/api/products/${id}/activate`, { method: 'POST' });
+            loadProducts();
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm("حذف هذا المنتج؟")) return;
+            await fetch(`/api/products/${id}`, { method: 'DELETE' });
+            loadProducts();
+        }
+
+        document.getElementById('product-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const id = document.getElementById('prod_id').value;
+            const payload = {
+                title: document.getElementById('prod_title').value.trim(),
+                subtitle: document.getElementById('prod_subtitle').value.trim(),
+                image_url: document.getElementById('prod_image').value.trim(),
+                price_1: parseInt(document.getElementById('prod_price1').value),
+                price_2: parseInt(document.getElementById('prod_price2').value),
+                price_3: parseInt(document.getElementById('prod_price3').value),
+                original_price: parseInt(document.getElementById('prod_original_price').value || 0),
+                description: document.getElementById('prod_desc').value.trim()
+            };
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `/api/products/${id}` : '/api/products';
+            await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            closeProductModal();
+            loadProducts();
+        });
+
+        // ==================== TAB 5: SHIPPING ====================
+        async function loadShippingRates() {
+            try {
+                const res = await fetch('/api/wilayas');
+                allShippingRates = await res.json();
+                renderShippingTable(allShippingRates);
+            } catch (err) { console.error(err); }
+        }
+
+        function renderShippingTable(rates) {
+            const tbody = document.getElementById('shipping-tbody');
+            tbody.innerHTML = '';
+            rates.forEach(w => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition";
+                tr.innerHTML = `
+                    <td class="px-4 py-3 font-black text-slate-700">#${String(w.code).padStart(2, '0')}</td>
+                    <td class="px-4 py-3 font-bold text-slate-900">${w.name_ar} <span class="text-slate-400 font-normal">(${w.name_fr})</span></td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" id="dom_${w.code}" value="${w.domicile}" 
+                                   class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg font-bold text-xs outline-none focus:bg-white focus:ring-1 focus:ring-emerald-500">
+                            <span class="text-[11px] text-slate-500">دج</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" id="stop_${w.code}" value="${w.stopdesk}" 
+                                   class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg font-bold text-xs outline-none focus:bg-white focus:ring-1 focus:ring-emerald-500">
+                            <span class="text-[11px] text-slate-500">دج</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3">
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">متاح ✓</span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <button onclick="saveWilayaRate(${w.code})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1 rounded-lg font-bold text-xs transition shadow-sm">
+                            حفظ
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.getElementById('shipping-search').addEventListener('input', function(e) {
+            const q = e.target.value.toLowerCase().trim();
+            const filtered = allShippingRates.filter(w => 
+                w.name_ar.includes(q) || w.name_fr.toLowerCase().includes(q) || String(w.code) === q
+            );
+            renderShippingTable(filtered);
+        });
+
+        async function saveWilayaRate(code) {
+            const dom = parseInt(document.getElementById(`dom_${code}`).value);
+            const stop = parseInt(document.getElementById(`stop_${code}`).value);
+            await fetch(`/api/wilayas/${code}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ domicile: dom, stopdesk: stop, is_available: 1 })
+            });
+            alert(`تم تحديث سعر الولاية ${code}`);
+        }
+
+        function openBulkShippingModal() { document.getElementById('bulk-shipping-modal').classList.remove('hidden'); }
+        function closeBulkShippingModal() { document.getElementById('bulk-shipping-modal').classList.add('hidden'); }
+
+        async function applyBulkShipping() {
+            const dom = document.getElementById('bulk_domicile').value;
+            const stop = document.getElementById('bulk_stopdesk').value;
+            const payload = {};
+            if (dom !== "") payload.domicile_flat = parseInt(dom);
+            if (stop !== "") payload.stopdesk_flat = parseInt(stop);
+            await fetch('/api/wilayas/bulk', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            closeBulkShippingModal();
+            loadShippingRates();
+            alert("تم تطبيق السعر الموحد");
+        }
+
+        async function resetShippingRates() {
+            if (!confirm("استعادة الأسعار الافتراضية؟")) return;
+            await fetch('/api/wilayas/reset', { method: 'POST' });
+            loadShippingRates();
+        }
+
+        // ==================== TAB 6: SETTINGS ====================
+        async function loadSettings() {
+            const res = await fetch('/api/settings');
+            const data = await res.json();
+            document.getElementById('setting_bot_token').value = data.telegram_bot_token || '';
+            document.getElementById('setting_chat_id').value = data.telegram_chat_id || '';
+        }
+
+        document.getElementById('telegram-settings-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const payload = {
+                telegram_bot_token: document.getElementById('setting_bot_token').value.trim(),
+                telegram_chat_id: document.getElementById('setting_chat_id').value.trim()
+            };
+            await fetch('/api/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            alert("تم حفظ إعدادات التيليغرام!");
+        });
+
+        // Initialize default view
+        loadOrders();
+    </script>
+</body>
+</html>
